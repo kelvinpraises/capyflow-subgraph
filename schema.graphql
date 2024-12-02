@@ -1,0 +1,153 @@
+# CapyCore
+type DistributionHandled @entity(immutable: true) {
+  id: Bytes!
+  poolId: BigInt! # uint256
+  token: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FundsTransferred @entity(immutable: true) {
+  id: Bytes!
+  poolId: BigInt! # uint256
+  capyNftId: BigInt! # uint256
+  recipient: Bytes! # address
+  collected: BigInt! # uint128
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type StreamSetup @entity(immutable: true) {
+  id: Bytes!
+  poolId: BigInt! # uint256
+  token: Bytes! # address
+  recipient: Bytes! # address
+  recipientDriverAccountId: BigInt! # uint256
+  capyNftId: BigInt! # uint256
+  amountPerSecond: BigInt! # uint256
+  duration: BigInt! # uint32
+  totalAllocation: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistedCollectorUpdated @entity(immutable: true) {
+  id: Bytes!
+  poolId: BigInt! # uint256
+  collector: Bytes! # address
+  isWhitelisted: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# CapyTrustStrategyFactory
+type StrategyCreated @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
+  name: String! # string
+  avatar: String! # string
+  description: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# CapyTrustStrategy
+type AllocationUpdated @entity(immutable: true) {
+  id: Bytes!
+  recipientAddress: Bytes! # address
+  newAllocation: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BatchAllocationCompleted @entity(immutable: true) {
+  id: Bytes!
+  allocationsCount: BigInt! # uint256
+  totalAllocated: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DistributionExecuted @entity(immutable: true) {
+  id: Bytes!
+  recipientIds: [Bytes!]! # address[]
+  allocations: [BigInt!]! # uint256[]
+  duration: BigInt! # uint32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PoolActive @entity(immutable: true) {
+  id: Bytes!
+  active: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RecipientRegistered @entity(immutable: true) {
+  id: Bytes!
+  recipientAddress: Bytes! # address
+  name: String! # string
+  avatar: String! # string
+  bio: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RecipientStatusUpdated @entity(immutable: true) {
+  id: Bytes!
+  recipientAddress: Bytes! # address
+  status: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Registered @entity(immutable: true) {
+  id: Bytes!
+  recipientId: Bytes! # address
+  data: Bytes! # bytes
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TimestampsUpdated @entity(immutable: true) {
+  id: Bytes!
+  registrationStartTime: BigInt! # uint64
+  registrationEndTime: BigInt! # uint64
+  allocationStartTime: BigInt! # uint64
+  allocationEndTime: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WhitelistedCollectorsUpdated @entity(immutable: true) {
+  id: Bytes!
+  newWhitelistedCollectors: [Bytes!]! # address[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

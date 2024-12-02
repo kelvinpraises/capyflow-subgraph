@@ -1,0 +1,102 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CapyCore
+    network: sepolia
+    source:
+      address: "0x68B1D87F95878fE05B998F19b66F4baba5De1aed"
+      abi: CapyCore
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DistributionHandled
+        - FundsTransferred
+        - StreamSetup
+        - WhitelistedCollectorUpdated
+      abis:
+        - name: CapyCore
+          file: ./abis/CapyCore.json
+      eventHandlers:
+        - event: DistributionHandled(indexed uint256,indexed address)
+          handler: handleDistributionHandled
+        - event: FundsTransferred(indexed uint256,indexed uint256,indexed address,uint128)
+          handler: handleFundsTransferred
+        - event: StreamSetup(indexed uint256,address,indexed address,indexed
+            uint256,uint256,uint256,uint32,uint256)
+          handler: handleStreamSetup
+        - event: WhitelistedCollectorUpdated(indexed uint256,indexed address,bool)
+          handler: handleWhitelistedCollectorUpdated
+      file: ./src/capy-core.ts
+  - kind: ethereum
+    name: CapyTrustStrategyFactory
+    network: sepolia
+    source:
+      address: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"
+      abi: CapyTrustStrategyFactory
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - StrategyCreated
+      abis:
+        - name: CapyTrustStrategyFactory
+          file: ./abis/CapyTrustStrategyFactory.json
+      eventHandlers:
+        - event: StrategyCreated(indexed address,indexed address,string,string,string)
+          handler: handleStrategyCreated
+      file: ./src/capy-trust-strategy-factory.ts
+templates:
+  - kind: ethereum
+    name: CapyTrustStrategy
+    network: sepolia
+    source:
+      abi: CapyTrustStrategy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AllocationUpdated
+        - BatchAllocationCompleted
+        - DistributionExecuted
+        - OwnershipTransferred
+        - PoolActive
+        - RecipientRegistered
+        - RecipientStatusUpdated
+        - Registered
+        - TimestampsUpdated
+        - WhitelistedCollectorsUpdated
+      abis:
+        - name: CapyTrustStrategy
+          file: ./abis/CapyTrustStrategy.json
+      eventHandlers:
+        - event: AllocationUpdated(indexed address,uint256)
+          handler: handleAllocationUpdated
+        - event: BatchAllocationCompleted(uint256,uint256)
+          handler: handleBatchAllocationCompleted
+        - event: DistributionExecuted(address[],uint256[],uint32)
+          handler: handleDistributionExecuted
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PoolActive(bool)
+          handler: handlePoolActive
+        - event: RecipientRegistered(indexed address,string,string,string)
+          handler: handleRecipientRegistered
+        - event: RecipientStatusUpdated(indexed address,uint8)
+          handler: handleRecipientStatusUpdated
+        - event: Registered(indexed address,bytes,address)
+          handler: handleRegistered
+        - event: TimestampsUpdated(uint64,uint64,uint64,uint64)
+          handler: handleTimestampsUpdated
+        - event: WhitelistedCollectorsUpdated(address[])
+          handler: handleWhitelistedCollectorsUpdated
+      file: ./src/capy-trust-strategy.ts
