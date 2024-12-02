@@ -22,6 +22,11 @@ import {
   TimestampsUpdated,
   WhitelistedCollectorsUpdated,
 } from "../generated/schema";
+import { Bytes, dataSource } from "@graphprotocol/graph-ts";
+
+let context = dataSource.context();
+let owner = context.getBytes("owner");
+let strategyAddress = context.getBytes("strategyAddress");
 
 export function handleAllocationUpdated(event: AllocationUpdatedEvent): void {
   let entity = new AllocationUpdated(
@@ -33,6 +38,9 @@ export function handleAllocationUpdated(event: AllocationUpdatedEvent): void {
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
+
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
 
   entity.save();
 }
@@ -50,6 +58,9 @@ export function handleBatchAllocationCompleted(
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
+
   entity.save();
 }
 
@@ -59,13 +70,18 @@ export function handleDistributionExecuted(
   let entity = new DistributionExecuted(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
-  entity.recipientIds = event.params.recipientIds;
+  entity.recipientIds = event.params.recipientIds.map<Bytes>(
+    (address) => address as Bytes
+  );
   entity.allocations = event.params.allocations;
   entity.duration = event.params.duration;
 
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
+
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
 
   entity.save();
 }
@@ -83,6 +99,9 @@ export function handleOwnershipTransferred(
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
+
   entity.save();
 }
 
@@ -95,6 +114,9 @@ export function handlePoolActive(event: PoolActiveEvent): void {
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
+
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
 
   entity.save();
 }
@@ -114,6 +136,9 @@ export function handleRecipientRegistered(
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
+
   entity.save();
 }
 
@@ -130,6 +155,9 @@ export function handleRecipientStatusUpdated(
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
+
   entity.save();
 }
 
@@ -144,6 +172,9 @@ export function handleRegistered(event: RegisteredEvent): void {
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
+
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
 
   entity.save();
 }
@@ -161,6 +192,9 @@ export function handleTimestampsUpdated(event: TimestampsUpdatedEvent): void {
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
+
   entity.save();
 }
 
@@ -170,11 +204,17 @@ export function handleWhitelistedCollectorsUpdated(
   let entity = new WhitelistedCollectorsUpdated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
-  entity.newWhitelistedCollectors = event.params.newWhitelistedCollectors;
+  entity.newWhitelistedCollectors =
+    event.params.newWhitelistedCollectors.map<Bytes>(
+      (address) => address as Bytes
+    );
 
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
+
+  entity.owner = owner;
+  entity.strategyAddress = strategyAddress;
 
   entity.save();
 }

@@ -60,6 +60,8 @@ type StrategyCreated @entity(immutable: true) {
 # CapyTrustStrategy
 type AllocationUpdated @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   recipientAddress: Bytes! # address
   newAllocation: BigInt! # uint256
   blockNumber: BigInt!
@@ -69,6 +71,8 @@ type AllocationUpdated @entity(immutable: true) {
 
 type BatchAllocationCompleted @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   allocationsCount: BigInt! # uint256
   totalAllocated: BigInt! # uint256
   blockNumber: BigInt!
@@ -78,6 +82,8 @@ type BatchAllocationCompleted @entity(immutable: true) {
 
 type DistributionExecuted @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   recipientIds: [Bytes!]! # address[]
   allocations: [BigInt!]! # uint256[]
   duration: BigInt! # uint32
@@ -88,6 +94,8 @@ type DistributionExecuted @entity(immutable: true) {
 
 type OwnershipTransferred @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   previousOwner: Bytes! # address
   newOwner: Bytes! # address
   blockNumber: BigInt!
@@ -97,6 +105,8 @@ type OwnershipTransferred @entity(immutable: true) {
 
 type PoolActive @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   active: Boolean! # bool
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -105,6 +115,8 @@ type PoolActive @entity(immutable: true) {
 
 type RecipientRegistered @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   recipientAddress: Bytes! # address
   name: String! # string
   avatar: String! # string
@@ -116,6 +128,8 @@ type RecipientRegistered @entity(immutable: true) {
 
 type RecipientStatusUpdated @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   recipientAddress: Bytes! # address
   status: Int! # uint8
   blockNumber: BigInt!
@@ -125,6 +139,8 @@ type RecipientStatusUpdated @entity(immutable: true) {
 
 type Registered @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   recipientId: Bytes! # address
   data: Bytes! # bytes
   sender: Bytes! # address
@@ -135,6 +151,8 @@ type Registered @entity(immutable: true) {
 
 type TimestampsUpdated @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   registrationStartTime: BigInt! # uint64
   registrationEndTime: BigInt! # uint64
   allocationStartTime: BigInt! # uint64
@@ -146,6 +164,8 @@ type TimestampsUpdated @entity(immutable: true) {
 
 type WhitelistedCollectorsUpdated @entity(immutable: true) {
   id: Bytes!
+  owner: Bytes! # address
+  strategyAddress: Bytes! # address
   newWhitelistedCollectors: [Bytes!]! # address[]
   blockNumber: BigInt!
   blockTimestamp: BigInt!

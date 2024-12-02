@@ -21,7 +21,7 @@ export function handleStrategyCreated(event: StrategyCreatedEvent): void {
   entity.save();
 
   let context = new DataSourceContext();
-  context.setString("creator", event.params.owner.toHexString());
-  context.setString("strategyName", event.params.name);
+  context.setBytes("owner", event.params.owner);
+  context.setBytes("strategyAddress", event.params.strategyAddress);
   CapyTrustStrategy.createWithContext(event.params.strategyAddress, context);
 }
